@@ -1,12 +1,13 @@
 import java.rmi.Naming;
-import java.rmi.RMISecurityManager;
-        
+
 public class CoeDistributionDeamon
 {
         
     public static void main(String args[]) {
     	try {
-    		System.setSecurityManager(new RMISecurityManager());
+    		if (System.getSecurityManager() == null) {
+    	        System.setSecurityManager(new SecurityManager());
+    	    }
     		      
             CoeDistribution stub = new CoeDistribution();
 
