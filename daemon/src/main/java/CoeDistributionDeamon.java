@@ -1,5 +1,6 @@
 import java.rmi.Naming;
-
+import java.rmi.registry.LocateRegistry;
+        
 public class CoeDistributionDeamon
 {
         
@@ -7,8 +8,9 @@ public class CoeDistributionDeamon
     	try {
     		if (System.getSecurityManager() == null) {
     	        System.setSecurityManager(new SecurityManager());
-    	    }
-    		      
+    		}
+    		// Host RMI registry on the specified port using the current classpath
+    		LocateRegistry.createRegistry(1099);
             CoeDistribution stub = new CoeDistribution();
 
             Naming.rebind("rmi://localhost/FMU", stub);
