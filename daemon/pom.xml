@@ -13,5 +13,13 @@
 	<artifactId>daemon</artifactId>
 	<name>Remote FMU daemon</name>
 
+
+<dependencies>
+
+		<dependency>
+			<groupId>org.intocps.fmi</groupId>
+			<artifactId>jnifmuapi</artifactId>
+		</dependency>
+</dependencies>
 </project>
 
