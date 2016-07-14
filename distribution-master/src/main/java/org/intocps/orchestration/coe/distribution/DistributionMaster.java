@@ -1,8 +1,10 @@
 package org.intocps.orchestration.coe.distribution;
 
+import java.io.File;
 import java.rmi.Naming;
-import java.rmi.RMISecurityManager;
 import java.util.HashMap;
+
+import org.intocps.fmi.IFmu;
 
 public class DistributionMaster {
 	
@@ -11,7 +13,7 @@ public class DistributionMaster {
 	private DistributionMaster()
 	{}
 	
-	private HashMap<String, CoeDistributionInterface> map_of_stubs = new HashMap<String, CoeDistributionInterface>();
+	private HashMap<String, CoeDistributionInterface> mapOfStubs = new HashMap<String, CoeDistributionInterface>();
 	
     public static synchronized DistributionMaster getInstance(){
         if(instance == null){
@@ -20,25 +22,41 @@ public class DistributionMaster {
         return instance;
     }
 	
-	public void connect_to_remote(String remote_path)
+	public void connectToRemote(String remote_path)
 	{
 	    try
 	    {
-			System.setSecurityManager(new RMISecurityManager());
+	        if (System.getSecurityManager() == null) {
+	            System.setSecurityManager(new SecurityManager());
+	        }
 			CoeDistributionInterface stub = (CoeDistributionInterface) Naming.lookup(remote_path);
-			map_of_stubs.put(remote_path,stub);	    
+			mapOfStubs.put(remote_path,stub);	    
 		} catch (Exception e) {
 	        System.err.println("Client exception: " + e.toString());
 	        e.printStackTrace();
 	    }
 	}
 	
-	public void get_platform(String remote_path)
+	public IFmu DistributedFmu(String remote_path, File file)
 	{
 	    try
 	    {
-			CoeDistributionInterface stub = map_of_stubs.get(remote_path);
-			String response = stub.return_config_string();
+			CoeDistributionInterface stub = mapOfStubs.get(remote_path);
+			IFmu distFmu = stub.getDistributedFmu(file);
+			return distFmu;
+		} catch (Exception e) {
+	        System.err.println("Client exception: " + e.toString());
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	
+	public void Platform(String remote_path)
+	{
+	    try
+	    {
+			CoeDistributionInterface stub = mapOfStubs.get(remote_path);
+			String response = stub.returnConfigString();
         	System.out.println("Remote system applicable: " + response);
 		} catch (Exception e) {
 	        System.err.println("Client exception: " + e.toString());
