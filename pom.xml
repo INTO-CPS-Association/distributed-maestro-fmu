@@ -23,7 +23,7 @@
 	<modules>
 		<module>daemon</module>
 		<module>distribution-master</module>
-		<module>coe</module>
+		<module>dcoe</module>
 	</modules>
 
 	<prerequisites>

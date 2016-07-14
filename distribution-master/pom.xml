@@ -2,14 +2,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-	<groupId>org.intocps.orchestration.distribution</groupId>
-	<artifactId>root</artifactId>
+		<groupId>org.intocps.orchestration.distribution</groupId>
+		<artifactId>root</artifactId>
 
-	<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>org.intocps.orchestration.distribution</groupId>
 	<artifactId>distribution-master</artifactId>
 	<name>The distributed FMU master</name>
 
@@ -18,6 +17,11 @@
 			<groupId>org.intocps.orchestration.distribution</groupId>
 			<artifactId>daemon</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.intocps.orchestration</groupId>
+			<artifactId>coe</artifactId>
+			<version>0.0.9-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
