@@ -28,9 +28,6 @@ public class DistributionMaster {
 	{
 	    try
 	    {
-	        if (System.getSecurityManager() == null) {
-	            System.setSecurityManager(new SecurityManager());
-	        }
 			CoeDistributionInterface stub = (CoeDistributionInterface) Naming.lookup(remote_path);
 			mapOfStubs.put(remote_path,stub);	    
 		} catch (Exception e) {
