@@ -1,3 +1,6 @@
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.Fmi2StatusKind;
 import org.intocps.fmi.FmiInvalidNativeStateException;
@@ -8,195 +11,172 @@ import org.intocps.fmi.IFmiComponentState;
 import org.intocps.fmi.IFmu;
 import org.intocps.fmi.InvalidParameterException;
 
-public class DFmuComponent implements IFmiComponent {
+public class DFmiComponent extends UnicastRemoteObject implements IFmiComponent {
 
-	@Override
-	public IFmu getFmu() {
-		// TODO Auto-generated method stub
-		return null;
+	IFmiComponent instance;
+	
+	public DFmiComponent(IFmiComponent component) throws RemoteException 
+	{
+		instance = component;
 	}
 
 	@Override
 	public Fmi2Status setDebugLogging(boolean loggingOn, String[] categories) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setDebugLogging(loggingOn, categories);
 	}
 
 	@Override
 	public Fmi2Status setupExperiment(boolean toleranceDefined, double tolerance, double startTime,
 			boolean stopTimeDefined, double stopTime) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setupExperiment(toleranceDefined, tolerance, startTime, stopTimeDefined, stopTime);
 	}
 
 	@Override
 	public Fmi2Status enterInitializationMode() throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.enterInitializationMode();
 	}
 
 	@Override
 	public Fmi2Status exitInitializationMode() throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.exitInitializationMode();
 	}
 
 	@Override
 	public Fmi2Status reset() throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.reset();
 	}
 
 	@Override
 	public Fmi2Status setRealInputDerivatives(long[] scalarValueIndices, int order, double[] derivatives)
 			throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setRealInputDerivatives(scalarValueIndices, order, derivatives);
 	}
 
 	@Override
 	public FmuResult<double[]> getRealOutputDerivatives(long[] scalarValueIndices, int order)
 			throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getRealOutputDerivatives(scalarValueIndices, order);
 	}
 
 	@Override
 	public FmuResult<double[]> getDirectionalDerivative(long[] vUnknownRef, long[] vKnownRef, double[] dvKnown)
 			throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getDirectionalDerivative(vUnknownRef, vKnownRef, dvKnown);
 	}
 
 	@Override
 	public Fmi2Status doStep(double currentCommunicationPoint, double communicationStepSize,
 			boolean noSetFMUStatePriorToCurrentPoint) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.doStep(currentCommunicationPoint, communicationStepSize, noSetFMUStatePriorToCurrentPoint);
 	}
 
 	@Override
 	public FmuResult<double[]> getReal(long[] scalarValueIndices) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getReal(scalarValueIndices);
 	}
 
 	@Override
 	public FmuResult<int[]> getInteger(long[] scalarValueIndices) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getInteger(scalarValueIndices);
 	}
 
 	@Override
 	public FmuResult<boolean[]> getBooleans(long[] scalarValueIndices) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getBooleans(scalarValueIndices);
 	}
 
 	@Override
 	public FmuResult<String[]> getStrings(long[] scalarValueIndices) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getStrings(scalarValueIndices);
 	}
 
 	@Override
 	public Fmi2Status setBooleans(long[] scalarValueIndices, boolean[] values)
 			throws InvalidParameterException, FmiInvalidNativeStateException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setBooleans(scalarValueIndices, values);
 	}
 
 	@Override
 	public Fmi2Status setReals(long[] scalarValueIndices, double[] values)
 			throws InvalidParameterException, FmiInvalidNativeStateException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setReals(scalarValueIndices, values);
 	}
 
 	@Override
 	public Fmi2Status setIntegers(long[] scalarValueIndices, int[] values)
 			throws InvalidParameterException, FmiInvalidNativeStateException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setIntegers(scalarValueIndices, values);
 	}
 
 	@Override
 	public Fmi2Status setStrings(long[] scalarValueIndices, String[] values)
 			throws InvalidParameterException, FmiInvalidNativeStateException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setStrings(scalarValueIndices, values);
 	}
 
 	@Override
 	public FmuResult<Boolean> getBooleanStatus(Fmi2StatusKind kind) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getBooleanStatus(kind);
 	}
 
 	@Override
 	public FmuResult<Fmi2Status> getStatus(Fmi2StatusKind kind) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getStatus(kind);
 	}
 
 	@Override
 	public FmuResult<Integer> getIntegerStatus(Fmi2StatusKind kind) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getIntegerStatus(kind);
 	}
 
 	@Override
 	public FmuResult<Double> getRealStatus(Fmi2StatusKind kind) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getRealStatus(kind);
 	}
 
 	@Override
 	public FmuResult<String> getStringStatus(Fmi2StatusKind kind) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getStringStatus(kind);
 	}
 
 	@Override
 	public Fmi2Status terminate() throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.terminate();
 	}
 
 	@Override
 	public void freeInstance() throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		
+		instance.freeInstance();
 	}
 
 	@Override
 	public FmuResult<IFmiComponentState> getState() throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getState();
 	}
 
 	@Override
 	public Fmi2Status setState(IFmiComponentState state) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.setState(state);
 	}
 
 	@Override
 	public Fmi2Status freeState(IFmiComponentState state) throws FmuInvocationException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.freeState(state);
 	}
 
 	@Override
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return instance.isValid();
 	}
 
 	@Override
 	public FmuResult<Double> getMaxStepSize() throws FmiInvalidNativeStateException {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getMaxStepSize();
+	}
+
+	@Override
+	public IFmu getFmu() {
+		return instance.getFmu();
 	}
 
 }
