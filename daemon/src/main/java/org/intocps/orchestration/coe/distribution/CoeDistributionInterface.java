@@ -1,6 +1,7 @@
 package org.intocps.orchestration.coe.distribution;
 
 import java.io.File;
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -11,5 +12,5 @@ public interface CoeDistributionInterface extends Remote {
 	
     String returnConfigString() throws RemoteException;
         
-    IFmu getDistributedFmu(File file, String name) throws RemoteException;
+    IFmu getDistributedFmu(File file, String name) throws RemoteException, IOException, FmuInvocationException;
 }
