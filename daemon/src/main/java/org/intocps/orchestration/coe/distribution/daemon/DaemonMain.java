@@ -3,9 +3,9 @@ package org.intocps.orchestration.coe.distribution.daemon;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
-import org.intocps.orchestration.coe.distribution.daemon.server.CoeDistribution;
+import org.intocps.orchestration.coe.distribution.daemon.server.Daemon;
 
-public class CoeDistributionDeamon
+public class DaemonMain
 {
 
 	public static void main(String args[])
@@ -14,7 +14,7 @@ public class CoeDistributionDeamon
 		{
 			// Host RMI registry on the specified port using the current classpath
 			LocateRegistry.createRegistry(1099);
-			CoeDistribution stub = new CoeDistribution();
+			Daemon stub = new Daemon();
 
 			Naming.rebind("rmi://localhost/FMU", stub);
 

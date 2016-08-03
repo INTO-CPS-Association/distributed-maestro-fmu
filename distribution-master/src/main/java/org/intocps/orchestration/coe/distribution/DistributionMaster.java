@@ -1,61 +1,82 @@
 package org.intocps.orchestration.coe.distribution;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmu;
 
-public class DistributionMaster {
-	
+public class DistributionMaster
+{
+
 	private static DistributionMaster instance;
-	
+
 	private DistributionMaster()
-	{}
-	
-	private HashMap<String, IDistributionCoe> mapOfStubs = new HashMap<String, IDistributionCoe>();
-	
-    public static synchronized DistributionMaster getInstance(){
-        if(instance == null){
-            instance = new DistributionMaster();
-        }
-        return instance;
-    }
-	
-	public void connectToRemote(String remote_path)
 	{
-	    try
-	    {
-			IDistributionCoe stub = (IDistributionCoe) Naming.lookup(remote_path);
-			mapOfStubs.put(remote_path,stub);	    
-		} catch (Exception e) {
-	        System.err.println("Client exception: " + e.toString());
-	        e.printStackTrace();
-	    }
 	}
-	
-	public IFmu DistributedFmu(String remote_path, File file)
+
+	private HashMap<String, IDaemon> mapOfStubs = new HashMap<String, IDaemon>();
+
+	public static synchronized DistributionMaster getInstance()
 	{
-		IDistributionCoe stub = mapOfStubs.get(remote_path);
-		IFmu distFmu = null;
-		try {
-			distFmu = stub.getDistributedFmu(file, remote_path);
-		} catch (IOException | FmuInvocationException e) {
+		if (instance == null)
+		{
+			instance = new DistributionMaster();
+		}
+		return instance;
+	}
+
+	public IDaemon connectToRemote(URI remote_path)
+	{
+		try
+		{
+			String path = remote_path.getScheme() + ":" + remote_path.getPath();
+			if (mapOfStubs.containsKey(path))
+			{
+				return mapOfStubs.get(path);
+			}
+
+			IDaemon stub = (IDaemon) Naming.lookup(path);
+			mapOfStubs.put(path, stub);
+			return stub;
+		} catch (Exception e)
+		{
+			System.err.println("Client exception: " + e.toString());
 			e.printStackTrace();
 		}
-		return distFmu;
+		return null;
 	}
-	
+
+	public IFmu DistributedFmu(String remote_path, File file)
+	{
+		IDaemon stub = mapOfStubs.get(remote_path);
+		IRemoteFmu distFmu = null;
+		try
+		{
+			distFmu = stub.uploadFmu(IOUtils.toByteArray(new FileInputStream(file)), file.getName());//.getDistributedFmu(file, remote_path);
+		} catch (IOException | FmuInvocationException e)
+		{
+			e.printStackTrace();
+		}
+		return new FmuRemoteProxy(distFmu);
+	}
+
 	public void Platform(String remote_path)
 	{
-		IDistributionCoe stub = mapOfStubs.get(remote_path);
-		String response = "empty";
-		try {
-			response = stub.returnConfigString();
-		} catch (RemoteException e) {
+		IDaemon stub = mapOfStubs.get(remote_path);
+		Map<String, String> response = new HashMap<>();
+		try
+		{
+			response = stub.getDaemonConfiguration();
+		} catch (RemoteException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

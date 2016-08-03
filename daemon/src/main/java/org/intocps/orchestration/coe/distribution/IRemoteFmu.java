@@ -10,7 +10,6 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
-import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmuCallback;
 
 public interface IRemoteFmu extends Remote
@@ -27,7 +26,7 @@ public interface IRemoteFmu extends Remote
 	 * @throws XPathExpressionException
 	 * @throws FmiInvalidNativeStateException
 	 */
-	public abstract IFmiComponent instantiate(String guid, String name,
+	public abstract IRemoteFmuComponent instantiate(String guid, String name,
 			boolean visible, boolean loggingOn, IFmuCallback callback)
 			throws XPathExpressionException, FmiInvalidNativeStateException,
 			RemoteException;

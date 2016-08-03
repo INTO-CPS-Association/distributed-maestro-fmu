@@ -74,3 +74,5 @@ bin
 .cache-main
 .cache-tests
 
+# test temp files
+distribution-master/*.fmu

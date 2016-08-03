@@ -18,12 +18,11 @@
 		<dependency>
 			<groupId>org.intocps.orchestration</groupId>
 			<artifactId>coe</artifactId>
-			<version>0.0.9-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.intocps.orchestration.distribution</groupId>
 			<artifactId>distribution-master</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 

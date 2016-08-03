@@ -9,23 +9,25 @@ import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.FmuResult;
 import org.intocps.fmi.IFmiComponent;
-import org.intocps.fmi.IFmiComponentState;
-import org.intocps.fmi.IFmu;
 import org.intocps.fmi.InvalidParameterException;
+import org.intocps.orchestration.coe.distribution.IRemoteFmu;
+import org.intocps.orchestration.coe.distribution.IRemoteFmuComponent;
 
 public class RemoteFmiComponent extends UnicastRemoteObject implements
-		IFmiComponent
+		IRemoteFmuComponent
 {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6005283667500177273L;
-	IFmiComponent instance;
+	final IFmiComponent instance;
+	final IRemoteFmu fmu;
 
-	public RemoteFmiComponent(IFmiComponent component) throws RemoteException
+	public RemoteFmiComponent(IRemoteFmu fmu,IFmiComponent component) throws RemoteException
 	{
-		instance = component;
+		this.fmu = fmu;
+		this.instance = component;
 	}
 
 	@Override
@@ -194,26 +196,26 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 		instance.freeInstance();
 	}
 
-	@Override
-	public FmuResult<IFmiComponentState> getState()
-			throws FmuInvocationException
-	{
-		return instance.getState();
-	}
-
-	@Override
-	public Fmi2Status setState(IFmiComponentState state)
-			throws FmuInvocationException
-	{
-		return instance.setState(state);
-	}
-
-	@Override
-	public Fmi2Status freeState(IFmiComponentState state)
-			throws FmuInvocationException
-	{
-		return instance.freeState(state);
-	}
+//	@Override
+//	public FmuResult<IFmiComponentState> getState()
+//			throws FmuInvocationException
+//	{
+//		return instance.getState();
+//	}
+//
+//	@Override
+//	public Fmi2Status setState(IFmiComponentState state)
+//			throws FmuInvocationException
+//	{
+//		return instance.setState(state);
+//	}
+//
+//	@Override
+//	public Fmi2Status freeState(IFmiComponentState state)
+//			throws FmuInvocationException
+//	{
+//		return instance.freeState(state);
+//	}
 
 	@Override
 	public boolean isValid()
@@ -228,10 +230,10 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 		return instance.getMaxStepSize();
 	}
 
-	@Override
-	public IFmu getFmu()
-	{
-		return instance.getFmu();
-	}
+//	@Override
+//	public IRemoteFmu getFmu()
+//	{
+//		return fmu;
+//	}
 
 }

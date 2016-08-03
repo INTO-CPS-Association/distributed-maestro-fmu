@@ -7,14 +7,18 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.zip.ZipException;
 
+import javax.xml.xpath.XPathExpressionException;
+
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmu;
 import org.intocps.fmi.IFmuCallback;
 import org.intocps.fmi.jnifmuapi.Factory;
+import org.intocps.orchestration.coe.distribution.IRemoteFmu;
+import org.intocps.orchestration.coe.distribution.IRemoteFmuComponent;
 
-public class RemoteFmu extends UnicastRemoteObject implements IFmu
+public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 {
 
 	/**
@@ -23,7 +27,7 @@ public class RemoteFmu extends UnicastRemoteObject implements IFmu
 	private static final long serialVersionUID = 6768389929226421212L;
 	IFmu instance;
 
-	public RemoteFmu(File file, String name) throws IOException,
+	public RemoteFmu(File file) throws IOException,
 			FmuInvocationException, RemoteException
 	{
 
@@ -67,16 +71,10 @@ public class RemoteFmu extends UnicastRemoteObject implements IFmu
 		return instance.getModelDescription();
 	}
 
-	interface ICallback
-	{
-		void log(String name, byte status, String category, String message);
-
-		void stepFinished(byte fmuStatus);
-	}
 
 	@Override
-	public IFmiComponent instantiate(String guid, String name, boolean visible,
-			boolean loggingOn, final IFmuCallback callback)
+	public IRemoteFmuComponent instantiate(String guid, String name, boolean visible,
+			boolean loggingOn, final IFmuCallback callback) throws XPathExpressionException, FmiInvalidNativeStateException, RemoteException
 	{
 		/*
 		 * IFmiComponent component; try { component = instance.instantiate(guid, name, visible, loggingOn, callback); }
@@ -84,7 +82,12 @@ public class RemoteFmu extends UnicastRemoteObject implements IFmu
 		 * (FmiInvalidNativeStateException e) { e.printStackTrace(); return null; } try { return new
 		 * DFmiComponent(component); } catch (RemoteException e) { e.printStackTrace(); return null; }
 		 */
-		return null;
+		
+		
+		IFmiComponent comp = instance.instantiate(guid, name, visible, loggingOn, null);
+		IRemoteFmuComponent remotecomponent= new RemoteFmiComponent(this,comp);
+		
+		return remotecomponent;
 	}
 
 	@Override
