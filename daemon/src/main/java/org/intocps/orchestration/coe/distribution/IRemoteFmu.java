@@ -1,3 +1,5 @@
+package org.intocps.orchestration.coe.distribution;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.Remote;
@@ -11,7 +13,7 @@ import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmuCallback;
 
-public interface IDFmu extends Remote
+public interface IRemoteFmu extends Remote
 {
 	public abstract void load() throws FmuInvocationException, RemoteException;
 
@@ -21,22 +23,27 @@ public interface IDFmu extends Remote
 	 * @param name
 	 * @param visible
 	 * @param loggingOn
-	 * @return
+	 * @return an FMI component
 	 * @throws XPathExpressionException
-	 * @throws FmiInvalidNativeStateException 
+	 * @throws FmiInvalidNativeStateException
 	 */
 	public abstract IFmiComponent instantiate(String guid, String name,
 			boolean visible, boolean loggingOn, IFmuCallback callback)
-			throws XPathExpressionException, FmiInvalidNativeStateException, RemoteException;
+			throws XPathExpressionException, FmiInvalidNativeStateException,
+			RemoteException;
 
-	public abstract void unLoad() throws FmiInvalidNativeStateException, RemoteException;
+	public abstract void unLoad() throws FmiInvalidNativeStateException,
+			RemoteException;
 
-	public abstract String getVersion() throws FmiInvalidNativeStateException, RemoteException;
+	public abstract String getVersion() throws FmiInvalidNativeStateException,
+			RemoteException;
 
-	public abstract String getTypesPlatform() throws FmiInvalidNativeStateException, RemoteException;
-	
-	public abstract InputStream getModelDescription() throws ZipException, IOException, RemoteException;
-	
+	public abstract String getTypesPlatform()
+			throws FmiInvalidNativeStateException, RemoteException;
+
+	public abstract InputStream getModelDescription() throws ZipException,
+			IOException, RemoteException;
+
 	public abstract boolean isValid() throws RemoteException;
 
 }

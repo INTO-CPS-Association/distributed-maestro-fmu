@@ -16,7 +16,7 @@ public class DistributionMaster {
 	private DistributionMaster()
 	{}
 	
-	private HashMap<String, CoeDistributionInterface> mapOfStubs = new HashMap<String, CoeDistributionInterface>();
+	private HashMap<String, IDistributionCoe> mapOfStubs = new HashMap<String, IDistributionCoe>();
 	
     public static synchronized DistributionMaster getInstance(){
         if(instance == null){
@@ -29,7 +29,7 @@ public class DistributionMaster {
 	{
 	    try
 	    {
-			CoeDistributionInterface stub = (CoeDistributionInterface) Naming.lookup(remote_path);
+			IDistributionCoe stub = (IDistributionCoe) Naming.lookup(remote_path);
 			mapOfStubs.put(remote_path,stub);	    
 		} catch (Exception e) {
 	        System.err.println("Client exception: " + e.toString());
@@ -39,7 +39,7 @@ public class DistributionMaster {
 	
 	public IFmu DistributedFmu(String remote_path, File file)
 	{
-		CoeDistributionInterface stub = mapOfStubs.get(remote_path);
+		IDistributionCoe stub = mapOfStubs.get(remote_path);
 		IFmu distFmu = null;
 		try {
 			distFmu = stub.getDistributedFmu(file, remote_path);
@@ -51,7 +51,7 @@ public class DistributionMaster {
 	
 	public void Platform(String remote_path)
 	{
-		CoeDistributionInterface stub = mapOfStubs.get(remote_path);
+		IDistributionCoe stub = mapOfStubs.get(remote_path);
 		String response = "empty";
 		try {
 			response = stub.returnConfigString();
