@@ -1,6 +1,7 @@
 package org.intocps.orchestration.coe.distribution;
 
 import java.io.File;
+import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -38,14 +39,14 @@ public class DistributionMaster {
 	
 	public IFmu DistributedFmu(String remote_path, File file)
 	{
-			CoeDistributionInterface stub = mapOfStubs.get(remote_path);
-			IFmu distFmu = null;
-			try {
-				distFmu = stub.getDistributedFmu(file, remote_path);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-			return distFmu;
+		CoeDistributionInterface stub = mapOfStubs.get(remote_path);
+		IFmu distFmu = null;
+		try {
+			distFmu = stub.getDistributedFmu(file, remote_path);
+		} catch (IOException | FmuInvocationException e) {
+			e.printStackTrace();
+		}
+		return distFmu;
 	}
 	
 	public void Platform(String remote_path)
@@ -55,7 +56,7 @@ public class DistributionMaster {
 		try {
 			response = stub.returnConfigString();
 		} catch (RemoteException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Remote system applicable: " + response);

@@ -5,8 +5,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.zip.ZipException;
 
-import javax.xml.xpath.XPathExpressionException;
-
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
@@ -18,28 +16,18 @@ public class DFmu extends UnicastRemoteObject implements IFmu {
 	
 	IFmu instance;
 	
-	public DFmu(File file, String name) throws RemoteException
+	public DFmu(File file, String name) throws IOException, FmuInvocationException, RemoteException
 	{
 		
 		if (file.isFile())
 		{
-			try {
-				instance = Factory.create(file);
-			} catch (IOException | FmuInvocationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			instance = Factory.create(file);
+
 		} else
 		{
-			try {
-				instance = Factory.createFromDirectory(file);
-			} catch (IOException | FmuInvocationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			instance = Factory.createFromDirectory(file);
 		}
 	}
-	
 	
 	@Override
 	public void load() throws FmuInvocationException
@@ -48,26 +36,15 @@ public class DFmu extends UnicastRemoteObject implements IFmu {
 	}
 
 	@Override
-	public void unLoad()
+	public void unLoad() throws FmiInvalidNativeStateException
 	{
-		try {
-			instance.unLoad();
-		} catch (FmiInvalidNativeStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		instance.unLoad();
 	}
 
-
 	@Override
-	public String getVersion()
+	public String getVersion() throws FmiInvalidNativeStateException
 	{
-		try {
-			return instance.getVersion();
-		} catch (FmiInvalidNativeStateException e) {
-			e.printStackTrace();
-			return "error";
-		}
+		return instance.getVersion();
 	}
 
 	@Override
@@ -75,9 +52,9 @@ public class DFmu extends UnicastRemoteObject implements IFmu {
 	{
 		return instance.getTypesPlatform();
 	}
-
+	
 	@Override
-	public InputStream getModelDescription() throws ZipException , IOException
+	public InputStream getModelDescription() throws ZipException, IOException
 	{
 		return instance.getModelDescription();
 	}
@@ -115,7 +92,8 @@ public class DFmu extends UnicastRemoteObject implements IFmu {
 	}
 	
 	@Override
-	public boolean isValid()  {
-			return instance.isValid();
+	public boolean isValid()
+	{
+		return instance.isValid();
 	}
 }

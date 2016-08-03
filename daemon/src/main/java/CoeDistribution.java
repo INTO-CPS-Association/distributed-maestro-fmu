@@ -15,15 +15,14 @@ public class CoeDistribution extends UnicastRemoteObject implements CoeDistribut
 	
 	}
 	
-	public String returnConfigString() throws RemoteException 
+	public String returnConfigString() throws RemoteException
 	{
 	    return "linux_x86_64";
 	}
 	
-	public IFmu getDistributedFmu(File file, String name) throws RemoteException
+	public IFmu getDistributedFmu(File file, String name) throws IOException, FmuInvocationException, RemoteException
 	{
-		DFmu distFmu;
-		distFmu = new DFmu(file, name);
+		IFmu distFmu = new DFmu(file, name);
 		return distFmu;
 	}
 }
