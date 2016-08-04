@@ -20,9 +20,14 @@ public class DaemonMain
 	{
 		Options options = new Options();
 		Option helpOpt = Option.builder("h").longOpt("help").desc("Show this description").build();
+		Option preferIp4Opt = Option.builder("ip4").longOpt("prefer-ip4").desc("Set the deamon to prefer ip4 when binding service").build();
 		Option configOpt = Option.builder("conf").longOpt("config").desc("Configuration property file").hasArg().build();
+		Option serverHostnameOpt = Option.builder("host").longOpt("hostname").desc("Public server host name for Java RMI").hasArg().build();
+
 		options.addOption(configOpt);
 		options.addOption(helpOpt);
+		options.addOption(serverHostnameOpt);
+		options.addOption(preferIp4Opt);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = null;
@@ -31,7 +36,7 @@ public class DaemonMain
 			cmd = parser.parse(options, args);
 		} catch (ParseException e1)
 		{
-			System.err.println("Parsing failed.  Reason: " + e1.getMessage());
+			System.err.println("Parsing failed. Reason: " + e1.getMessage());
 			showHelp(options);
 			return;
 		}
@@ -40,6 +45,18 @@ public class DaemonMain
 		{
 			showHelp(options);
 			return;
+		}
+
+		if (cmd.hasOption(preferIp4Opt.getOpt()))
+		{
+			System.setProperty("java.net.preferIPv4Stack", "true");
+		}
+
+		if (cmd.hasOption(serverHostnameOpt.getOpt()))
+		{
+			String hostName = cmd.getOptionValue(serverHostnameOpt.getOpt());
+			System.out.println("Setting host name to: " + hostName);
+			System.setProperty("java.rmi.server.hostname", hostName);
 		}
 
 		File configFile = null;

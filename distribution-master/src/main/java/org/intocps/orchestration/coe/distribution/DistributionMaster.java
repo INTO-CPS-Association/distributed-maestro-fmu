@@ -35,11 +35,14 @@ public class DistributionMaster
 	{
 		try
 		{
-			String path = remote_path.getScheme() + ":" + remote_path.getPath();
+			String path = remote_path.toString();
+			path = path.substring(0, path.indexOf('#'));
 			if (mapOfStubs.containsKey(path))
 			{
 				return mapOfStubs.get(path);
 			}
+
+			System.out.println("Trying to lookup on: " + path);
 
 			IDaemon stub = (IDaemon) Naming.lookup(path);
 			mapOfStubs.put(path, stub);
