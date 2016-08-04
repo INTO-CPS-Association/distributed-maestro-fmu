@@ -11,13 +11,16 @@ import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmiComponentState;
 import org.intocps.fmi.IFmu;
 import org.intocps.fmi.InvalidParameterException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ComponentRemoteProxy implements IFmiComponent
 {
+	final static Logger logger = LoggerFactory.getLogger(ComponentRemoteProxy.class);
 	final IFmu fmu;
 	final IRemoteFmuComponent comp;
-	
-	public ComponentRemoteProxy(IFmu fmu,IRemoteFmuComponent comp)
+
+	public ComponentRemoteProxy(IFmu fmu, IRemoteFmuComponent comp)
 	{
 		this.fmu = fmu;
 		this.comp = comp;
@@ -32,8 +35,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.doStep(arg0, arg1, arg2);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -46,8 +48,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.enterInitializationMode();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -60,8 +61,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.exitInitializationMode();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -71,11 +71,10 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			 comp.freeInstance();
+			comp.freeInstance();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 	}
 
@@ -83,14 +82,13 @@ public class ComponentRemoteProxy implements IFmiComponent
 	public Fmi2Status freeState(IFmiComponentState arg0)
 			throws FmuInvocationException
 	{
-//		try
-//		{
-//			return comp.fr
-//		} catch (RemoteException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try
+		// {
+		// return comp.fr
+		// } catch (RemoteException e)
+		// {
+		// logger.error("RemoteException", e);
+		// }
 		return null;
 	}
 
@@ -103,8 +101,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getBooleanStatus(arg0);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -118,8 +115,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getBooleans(arg0);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -133,8 +129,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getDirectionalDerivative(vUnknownRef, vKnownRef, dvKnown);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -142,7 +137,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	@Override
 	public IFmu getFmu()
 	{
-			return fmu;
+		return fmu;
 	}
 
 	@Override
@@ -154,8 +149,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getInteger(scalarValueIndices);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -169,8 +163,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getIntegerStatus(arg0);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -184,8 +177,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getMaxStepSize();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -199,23 +191,21 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getReal(scalarValueIndices);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
 
 	@Override
-	public FmuResult<double[]> getRealOutputDerivatives(long[] scalarValueIndices, int order)
-			throws FmuInvocationException
+	public FmuResult<double[]> getRealOutputDerivatives(
+			long[] scalarValueIndices, int order) throws FmuInvocationException
 	{
 		try
 		{
 			return comp.getRealOutputDerivatives(scalarValueIndices, order);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -229,8 +219,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getRealStatus(kind);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -239,14 +228,13 @@ public class ComponentRemoteProxy implements IFmiComponent
 	public FmuResult<IFmiComponentState> getState()
 			throws FmuInvocationException
 	{
-//		try
-//		{
-//			return comp
-//		} catch (RemoteException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try
+		// {
+		// return comp
+		// } catch (RemoteException e)
+		// {
+		// logger.error("RemoteException", e);
+		// }
 		return null;
 	}
 
@@ -259,8 +247,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getStatus(kind);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -274,8 +261,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getStringStatus(kind);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -289,8 +275,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.getStrings(scalarValueIndices);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -303,8 +288,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.isValid();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return false;
 	}
@@ -317,8 +301,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.reset();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -332,8 +315,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.setBooleans(scalarValueIndices, values);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -347,8 +329,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.setDebugLogging(loggingOn, categories);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -362,23 +343,21 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.setIntegers(scalarValueIndices, values);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
 
 	@Override
-	public Fmi2Status setRealInputDerivatives(long[] scalarValueIndices, int order,
-			double[] derivatives) throws FmuInvocationException
+	public Fmi2Status setRealInputDerivatives(long[] scalarValueIndices,
+			int order, double[] derivatives) throws FmuInvocationException
 	{
 		try
 		{
 			return comp.setRealInputDerivatives(scalarValueIndices, order, derivatives);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -392,8 +371,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.setReals(scalarValueIndices, values);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -402,14 +380,13 @@ public class ComponentRemoteProxy implements IFmiComponent
 	public Fmi2Status setState(IFmiComponentState arg0)
 			throws FmuInvocationException
 	{
-//		try
-//		{
-//			return comp
-//		} catch (RemoteException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try
+		// {
+		// return comp
+		// } catch (RemoteException e)
+		// {
+		// logger.error("RemoteException", e);
+		// }
 		return null;
 	}
 
@@ -422,23 +399,22 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.setStrings(scalarValueIndices, values);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
 
 	@Override
-	public Fmi2Status setupExperiment(boolean toleranceDefined, double tolerance, double startTime,
-			boolean stopTimeDefined, double stopTime) throws FmuInvocationException
+	public Fmi2Status setupExperiment(boolean toleranceDefined,
+			double tolerance, double startTime, boolean stopTimeDefined,
+			double stopTime) throws FmuInvocationException
 	{
 		try
 		{
 			return comp.setupExperiment(toleranceDefined, tolerance, startTime, stopTimeDefined, stopTime);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -451,8 +427,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 			return comp.terminate();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}

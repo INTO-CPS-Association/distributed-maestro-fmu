@@ -14,14 +14,14 @@ import org.intocps.fmi.FmuInvocationException;
 
 public interface IRemoteFmu extends Remote
 {
-	public interface IRemoteFmuCallback extends Remote//, IFmuCallback
+	public interface IRemoteFmuCallback extends Remote// , IFmuCallback
 	{
 		abstract void log(String instanceName, Fmi2Status status,
 				String category, String message) throws RemoteException;
 
-		abstract void stepFinished(Fmi2Status status) throws RemoteException; 
+		abstract void stepFinished(Fmi2Status status) throws RemoteException;
 	}
-	
+
 	public abstract void load() throws FmuInvocationException, RemoteException;
 
 	/**

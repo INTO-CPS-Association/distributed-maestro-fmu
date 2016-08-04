@@ -17,7 +17,7 @@ public class Main
 		// IFmuCallback distCallback = null;
 
 		IFmu obj = null;
-		obj = distMan.DistributedFmu("rmi://localhost/FMU", new File("/home/peter/Documents/rep_test/distributed-fmu/daemon/src/main/resources/watertank.fmu"));
+		obj = distMan.uploadFmu("rmi://localhost/FMU", new File("/home/peter/Documents/rep_test/distributed-fmu/daemon/src/main/resources/watertank.fmu"));
 
 		String version = "EMPTY";
 		try

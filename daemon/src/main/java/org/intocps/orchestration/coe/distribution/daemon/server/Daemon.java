@@ -12,8 +12,7 @@ import org.intocps.fmi.FmuInvocationException;
 import org.intocps.orchestration.coe.distribution.IDaemon;
 import org.intocps.orchestration.coe.distribution.IRemoteFmu;
 
-public class Daemon extends UnicastRemoteObject implements
-		IDaemon
+public class Daemon extends UnicastRemoteObject implements IDaemon
 {
 
 	/**
@@ -27,8 +26,8 @@ public class Daemon extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public IRemoteFmu uploadFmu(byte[] buffer, String name) throws RemoteException,
-			IOException, FmuInvocationException
+	public IRemoteFmu uploadFmu(byte[] buffer, String name)
+			throws RemoteException, IOException, FmuInvocationException
 	{
 		File file = new File(name);
 		FileUtils.writeByteArrayToFile(file, buffer);

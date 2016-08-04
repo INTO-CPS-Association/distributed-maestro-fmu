@@ -13,7 +13,7 @@ import org.intocps.fmi.InvalidParameterException;
 public interface IRemoteFmuComponent extends Remote
 {
 
-//	public abstract IRemoteFmu getFmu();
+	// public abstract IRemoteFmu getFmu();
 
 	public abstract Fmi2Status setDebugLogging(boolean loggingOn,
 			String[] categories) throws FmuInvocationException, RemoteException;

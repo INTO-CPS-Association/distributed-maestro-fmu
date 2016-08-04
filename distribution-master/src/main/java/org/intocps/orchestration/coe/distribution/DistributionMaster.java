@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.rmi.Naming;
-import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.intocps.fmi.FmuInvocationException;
@@ -54,13 +52,14 @@ public class DistributionMaster
 		return null;
 	}
 
-	public IFmu DistributedFmu(String remote_path, File file)
+	public IFmu uploadFmu(String remote_path, File file)
 	{
 		IDaemon stub = mapOfStubs.get(remote_path);
 		IRemoteFmu distFmu = null;
 		try
 		{
-			distFmu = stub.uploadFmu(IOUtils.toByteArray(new FileInputStream(file)), file.getName());//.getDistributedFmu(file, remote_path);
+			distFmu = stub.uploadFmu(IOUtils.toByteArray(new FileInputStream(file)), file.getName());// .getDistributedFmu(file,
+																										// remote_path);
 		} catch (IOException | FmuInvocationException e)
 		{
 			e.printStackTrace();
@@ -68,18 +67,4 @@ public class DistributionMaster
 		return new FmuRemoteProxy(distFmu);
 	}
 
-	public void Platform(String remote_path)
-	{
-		IDaemon stub = mapOfStubs.get(remote_path);
-		Map<String, String> response = new HashMap<>();
-		try
-		{
-			response = stub.getDaemonConfiguration();
-		} catch (RemoteException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Remote system applicable: " + response);
-	}
 }

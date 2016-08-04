@@ -99,10 +99,11 @@ public class UploadTest
 
 		proxy.unLoad();
 	}
-	
+
 	@Test
 	public void instantiateTest() throws InterruptedException, IOException,
-			FmuInvocationException, URISyntaxException, XPathExpressionException
+			FmuInvocationException, URISyntaxException,
+			XPathExpressionException
 	{
 		URI fmu = new URI("src/test/resources/watertank-c.fmu");
 		fmu = new File(".").toURI().resolve(fmu);
@@ -120,8 +121,9 @@ public class UploadTest
 		proxy.load();
 		System.out.println(proxy.getVersion());
 		Assert.assertEquals("2.0", proxy.getVersion());
-		
-		IFmiComponent comp = proxy.instantiate("{8c4e810f-3df3-4a00-8276-176fa3c9f001}", "instance 1", true,true, new org.intocps.fmi.IFmuCallback(){
+
+		IFmiComponent comp = proxy.instantiate("{8c4e810f-3df3-4a00-8276-176fa3c9f001}", "instance 1", true, true, new org.intocps.fmi.IFmuCallback()
+		{
 
 			@Override
 			public void log(String instanceName, Fmi2Status status,
@@ -136,9 +138,10 @@ public class UploadTest
 			{
 				// TODO Auto-generated method stub
 				System.out.println(status);
-			}});
+			}
+		});
 		Assert.assertNotNull("Component must not be null", comp);
-		
+
 		comp.setupExperiment(false, 0, 0, true, 10);
 		comp.enterInitializationMode();
 

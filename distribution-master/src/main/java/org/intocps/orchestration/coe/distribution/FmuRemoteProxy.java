@@ -15,13 +15,18 @@ import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmu;
 import org.intocps.fmi.IFmuCallback;
 import org.intocps.orchestration.coe.distribution.IRemoteFmu.IRemoteFmuCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FmuRemoteProxy implements IFmu
 {
-	public static class FmuCallbackRemoteProxy extends UnicastRemoteObject implements IRemoteFmuCallback
+	final static Logger logger = LoggerFactory.getLogger(FmuRemoteProxy.class);
+
+	public static class FmuCallbackRemoteProxy extends UnicastRemoteObject
+			implements IRemoteFmuCallback
 	{
 
-		 /**
+		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 2747286841662224378L;
@@ -42,8 +47,6 @@ public class FmuRemoteProxy implements IFmu
 		{
 			this.callback = callback;
 		}
-
-		
 
 		@Override
 		public void log(String instanceName, Fmi2Status status,
@@ -81,8 +84,7 @@ public class FmuRemoteProxy implements IFmu
 			return remote.getTypesPlatform();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -95,8 +97,7 @@ public class FmuRemoteProxy implements IFmu
 			return remote.getVersion();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -108,22 +109,21 @@ public class FmuRemoteProxy implements IFmu
 	{
 		try
 		{
-			
+
 			IRemoteFmuCallback remoteCallback = null;
-			
-			if(callback!=null)
+
+			if (callback != null)
 			{
 				remoteCallback = new FmuCallbackRemoteProxy();
-				((FmuCallbackRemoteProxy)remoteCallback).setCallback(callback);
+				((FmuCallbackRemoteProxy) remoteCallback).setCallback(callback);
 			}
-			
+
 			IRemoteFmuComponent remoteComp = remote.instantiate(guid, name, visible, loggingOn, remoteCallback);
 
 			return new ComponentRemoteProxy(this, remoteComp);
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return null;
 	}
@@ -136,8 +136,7 @@ public class FmuRemoteProxy implements IFmu
 			return remote.isValid();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 		return false;
 	}
@@ -150,8 +149,7 @@ public class FmuRemoteProxy implements IFmu
 			remote.load();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 	}
 
@@ -163,8 +161,7 @@ public class FmuRemoteProxy implements IFmu
 			remote.unLoad();
 		} catch (RemoteException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("RemoteException", e);
 		}
 	}
 

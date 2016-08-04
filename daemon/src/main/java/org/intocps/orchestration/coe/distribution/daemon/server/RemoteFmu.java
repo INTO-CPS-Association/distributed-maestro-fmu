@@ -28,8 +28,8 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 	private static final long serialVersionUID = 6768389929226421212L;
 	IFmu instance;
 
-	public RemoteFmu(File file) throws IOException,
-			FmuInvocationException, RemoteException
+	public RemoteFmu(File file) throws IOException, FmuInvocationException,
+			RemoteException
 	{
 
 		if (file.isFile())
@@ -72,10 +72,11 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 		return instance.getModelDescription();
 	}
 
-
 	@Override
-	public IRemoteFmuComponent instantiate(String guid, String name, boolean visible,
-			boolean loggingOn, final IRemoteFmuCallback callback) throws XPathExpressionException, FmiInvalidNativeStateException, RemoteException
+	public IRemoteFmuComponent instantiate(String guid, String name,
+			boolean visible, boolean loggingOn,
+			final IRemoteFmuCallback callback) throws XPathExpressionException,
+			FmiInvalidNativeStateException, RemoteException
 	{
 		/*
 		 * IFmiComponent component; try { component = instance.instantiate(guid, name, visible, loggingOn, callback); }
@@ -83,14 +84,14 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 		 * (FmiInvalidNativeStateException e) { e.printStackTrace(); return null; } try { return new
 		 * DFmiComponent(component); } catch (RemoteException e) { e.printStackTrace(); return null; }
 		 */
-		
+
 		IFmuCallback localCallback = null;
-		
-		if(callback!=null)
+
+		if (callback != null)
 		{
 			localCallback = new IFmuCallback()
 			{
-				
+
 				@Override
 				public void stepFinished(Fmi2Status status)
 				{
@@ -103,10 +104,10 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 						e.printStackTrace();
 					}
 				}
-				
+
 				@Override
-				public void log(String instanceName, Fmi2Status status, String category,
-						String message)
+				public void log(String instanceName, Fmi2Status status,
+						String category, String message)
 				{
 					try
 					{
@@ -119,11 +120,10 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 				}
 			};
 		}
-		
-		
+
 		IFmiComponent comp = instance.instantiate(guid, name, visible, loggingOn, localCallback);
-		IRemoteFmuComponent remotecomponent= new RemoteFmiComponent(this,comp);
-		
+		IRemoteFmuComponent remotecomponent = new RemoteFmiComponent(this, comp);
+
 		return remotecomponent;
 	}
 
