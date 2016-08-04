@@ -3,18 +3,63 @@ package org.intocps.orchestration.coe.distribution;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.zip.ZipException;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmu;
 import org.intocps.fmi.IFmuCallback;
+import org.intocps.orchestration.coe.distribution.IRemoteFmu.IRemoteFmuCallback;
 
 public class FmuRemoteProxy implements IFmu
 {
+	public static class FmuCallbackRemoteProxy extends UnicastRemoteObject implements IRemoteFmuCallback
+	{
+
+		 /**
+		 * 
+		 */
+		private static final long serialVersionUID = 2747286841662224378L;
+
+		protected FmuCallbackRemoteProxy() throws RemoteException
+		{
+			super();
+		}
+
+		IFmuCallback callback;
+
+		public IFmuCallback getCallback()
+		{
+			return callback;
+		}
+
+		public void setCallback(IFmuCallback callback)
+		{
+			this.callback = callback;
+		}
+
+		
+
+		@Override
+		public void log(String instanceName, Fmi2Status status,
+				String category, String message) throws RemoteException
+		{
+			callback.log(instanceName, status, category, message);
+		}
+
+		@Override
+		public void stepFinished(Fmi2Status status) throws RemoteException
+		{
+			callback.stepFinished(status);
+		}
+
+	}
+
 	IRemoteFmu remote;
 
 	public FmuRemoteProxy(IRemoteFmu fmu)
@@ -63,9 +108,18 @@ public class FmuRemoteProxy implements IFmu
 	{
 		try
 		{
-			IRemoteFmuComponent remoteComp = remote.instantiate(guid, name, visible, loggingOn, callback);
 			
-			return new ComponentRemoteProxy(this,remoteComp);
+			IRemoteFmuCallback remoteCallback = null;
+			
+			if(callback!=null)
+			{
+				remoteCallback = new FmuCallbackRemoteProxy();
+				((FmuCallbackRemoteProxy)remoteCallback).setCallback(callback);
+			}
+			
+			IRemoteFmuComponent remoteComp = remote.instantiate(guid, name, visible, loggingOn, remoteCallback);
+
+			return new ComponentRemoteProxy(this, remoteComp);
 		} catch (RemoteException e)
 		{
 			// TODO Auto-generated catch block

@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.io.IOUtils;
+import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
 import org.intocps.orchestration.coe.distribution.daemon.DaemonMain;
@@ -120,7 +121,22 @@ public class UploadTest
 		System.out.println(proxy.getVersion());
 		Assert.assertEquals("2.0", proxy.getVersion());
 		
-		IFmiComponent comp = proxy.instantiate("{8c4e810f-3df3-4a00-8276-176fa3c9f001}", "instance 1", true,true, null);
+		IFmiComponent comp = proxy.instantiate("{8c4e810f-3df3-4a00-8276-176fa3c9f001}", "instance 1", true,true, new org.intocps.fmi.IFmuCallback(){
+
+			@Override
+			public void log(String instanceName, Fmi2Status status,
+					String category, String message)
+			{
+				// TODO Auto-generated method stub
+				System.out.println(message);
+			}
+
+			@Override
+			public void stepFinished(Fmi2Status status)
+			{
+				// TODO Auto-generated method stub
+				System.out.println(status);
+			}});
 		Assert.assertNotNull("Component must not be null", comp);
 		
 		comp.setupExperiment(false, 0, 0, true, 10);

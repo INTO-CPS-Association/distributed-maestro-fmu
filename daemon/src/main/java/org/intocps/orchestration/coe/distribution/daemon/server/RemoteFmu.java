@@ -9,6 +9,7 @@ import java.util.zip.ZipException;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
@@ -74,7 +75,7 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 
 	@Override
 	public IRemoteFmuComponent instantiate(String guid, String name, boolean visible,
-			boolean loggingOn, final IFmuCallback callback) throws XPathExpressionException, FmiInvalidNativeStateException, RemoteException
+			boolean loggingOn, final IRemoteFmuCallback callback) throws XPathExpressionException, FmiInvalidNativeStateException, RemoteException
 	{
 		/*
 		 * IFmiComponent component; try { component = instance.instantiate(guid, name, visible, loggingOn, callback); }
@@ -83,8 +84,44 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 		 * DFmiComponent(component); } catch (RemoteException e) { e.printStackTrace(); return null; }
 		 */
 		
+		IFmuCallback localCallback = null;
 		
-		IFmiComponent comp = instance.instantiate(guid, name, visible, loggingOn, null);
+		if(callback!=null)
+		{
+			localCallback = new IFmuCallback()
+			{
+				
+				@Override
+				public void stepFinished(Fmi2Status status)
+				{
+					try
+					{
+						callback.stepFinished(status);
+					} catch (RemoteException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				@Override
+				public void log(String instanceName, Fmi2Status status, String category,
+						String message)
+				{
+					try
+					{
+						callback.log(instanceName, status, category, message);
+					} catch (RemoteException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+		}
+		
+		
+		IFmiComponent comp = instance.instantiate(guid, name, visible, loggingOn, localCallback);
 		IRemoteFmuComponent remotecomponent= new RemoteFmiComponent(this,comp);
 		
 		return remotecomponent;
