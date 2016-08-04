@@ -98,7 +98,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getBooleanStatus(arg0);
+			return comp.getBooleanStatus(arg0).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -112,7 +112,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getBooleans(arg0);
+			return comp.getBooleans(arg0).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -126,7 +126,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getDirectionalDerivative(vUnknownRef, vKnownRef, dvKnown);
+			return comp.getDirectionalDerivative(vUnknownRef, vKnownRef, dvKnown).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -146,7 +146,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getInteger(scalarValueIndices);
+			return comp.getInteger(scalarValueIndices).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -160,7 +160,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getIntegerStatus(arg0);
+			return comp.getIntegerStatus(arg0).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -174,7 +174,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getMaxStepSize();
+			return comp.getMaxStepSize().unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -188,7 +188,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getReal(scalarValueIndices);
+			return comp.getReal(scalarValueIndices).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -202,7 +202,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getRealOutputDerivatives(scalarValueIndices, order);
+			return comp.getRealOutputDerivatives(scalarValueIndices, order).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -216,7 +216,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getRealStatus(kind);
+			return comp.getRealStatus(kind).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -244,7 +244,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getStatus(kind);
+			return comp.getStatus(kind).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -258,7 +258,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getStringStatus(kind);
+			return comp.getStringStatus(kind).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -272,7 +272,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 	{
 		try
 		{
-			return comp.getStrings(scalarValueIndices);
+			return comp.getStrings(scalarValueIndices).unwrap();
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);

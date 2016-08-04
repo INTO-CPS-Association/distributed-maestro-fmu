@@ -7,7 +7,6 @@ import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.Fmi2StatusKind;
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
-import org.intocps.fmi.FmuResult;
 import org.intocps.fmi.InvalidParameterException;
 
 public interface IRemoteFmuComponent extends Remote
@@ -35,10 +34,10 @@ public interface IRemoteFmuComponent extends Remote
 			double[] derivatives) throws FmuInvocationException,
 			RemoteException;
 
-	FmuResult<double[]> getRealOutputDerivatives(long[] scalarValueIndices,
+	RemoteFmuResult<double[]> getRealOutputDerivatives(long[] scalarValueIndices,
 			int order) throws FmuInvocationException, RemoteException;
 
-	public FmuResult<double[]> getDirectionalDerivative(long[] vUnknownRef,
+	public RemoteFmuResult<double[]> getDirectionalDerivative(long[] vUnknownRef,
 			long[] vKnownRef, double[] dvKnown) throws FmuInvocationException,
 			RemoteException;
 
@@ -54,10 +53,10 @@ public interface IRemoteFmuComponent extends Remote
 	 * 
 	 * @param scalarValueIndices
 	 */
-	public abstract FmuResult<double[]> getReal(long[] scalarValueIndices)
+	public abstract RemoteFmuResult<double[]> getReal(long[] scalarValueIndices)
 			throws FmuInvocationException, RemoteException;
 
-	public abstract FmuResult<int[]> getInteger(long[] scalarValueIndices)
+	public abstract RemoteFmuResult<int[]> getInteger(long[] scalarValueIndices)
 			throws FmuInvocationException, RemoteException;
 
 	/**
@@ -65,10 +64,10 @@ public interface IRemoteFmuComponent extends Remote
 	 * 
 	 * @param scalarValueIndices
 	 */
-	public abstract FmuResult<boolean[]> getBooleans(long[] scalarValueIndices)
+	public abstract RemoteFmuResult<boolean[]> getBooleans(long[] scalarValueIndices)
 			throws FmuInvocationException, RemoteException;
 
-	public abstract FmuResult<String[]> getStrings(long[] scalarValueIndices)
+	public abstract RemoteFmuResult<String[]> getStrings(long[] scalarValueIndices)
 			throws FmuInvocationException, RemoteException;
 
 	public abstract Fmi2Status setBooleans(long[] scalarValueIndices,
@@ -87,19 +86,19 @@ public interface IRemoteFmuComponent extends Remote
 			String[] values) throws InvalidParameterException,
 			FmiInvalidNativeStateException, RemoteException;
 
-	public abstract FmuResult<Boolean> getBooleanStatus(Fmi2StatusKind kind)
+	public abstract RemoteFmuResult<Boolean> getBooleanStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException, RemoteException;
 
-	public abstract FmuResult<Fmi2Status> getStatus(Fmi2StatusKind kind)
+	public abstract RemoteFmuResult<Fmi2Status> getStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException, RemoteException;
 
-	public abstract FmuResult<Integer> getIntegerStatus(Fmi2StatusKind kind)
+	public abstract RemoteFmuResult<Integer> getIntegerStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException, RemoteException;
 
-	public abstract FmuResult<Double> getRealStatus(Fmi2StatusKind kind)
+	public abstract RemoteFmuResult<Double> getRealStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException, RemoteException;
 
-	public abstract FmuResult<String> getStringStatus(Fmi2StatusKind kind)
+	public abstract RemoteFmuResult<String> getStringStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException, RemoteException;
 
 	public abstract Fmi2Status terminate() throws FmuInvocationException,
@@ -108,7 +107,7 @@ public interface IRemoteFmuComponent extends Remote
 	public abstract void freeInstance() throws FmuInvocationException,
 			RemoteException;
 
-	// public abstract FmuResult<IFmiComponentState> getState()
+	// public abstract RemoteFmuResult<IFmiComponentState> getState()
 	// throws FmuInvocationException;
 	//
 	// public abstract Fmi2Status setState(IFmiComponentState state)
@@ -126,6 +125,6 @@ public interface IRemoteFmuComponent extends Remote
 	 * @return the step max size
 	 * @throws FmiInvalidNativeStateException
 	 */
-	public abstract FmuResult<Double> getMaxStepSize()
+	public abstract RemoteFmuResult<Double> getMaxStepSize()
 			throws FmiInvalidNativeStateException, RemoteException;
 }

@@ -1,5 +1,6 @@
 package org.intocps.orchestration.coe.distribution;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
@@ -73,7 +74,7 @@ public class FmuRemoteProxy implements IFmu
 	@Override
 	public InputStream getModelDescription() throws ZipException, IOException
 	{
-		return remote.getModelDescription();
+		return new ByteArrayInputStream(remote.getModelDescription());
 	}
 
 	@Override

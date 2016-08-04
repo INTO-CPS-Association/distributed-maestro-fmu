@@ -47,7 +47,9 @@ public class DistributedFmuFactory implements IFmuFactory
 		IDaemon stub = connect(uri);
 		if (stub != null)
 		{
-			IRemoteFmu fmu = stub.uploadFmu(IOUtils.toByteArray(URI.create(uri.getFragment())), uri.getFragment());
+			String fmuName = uri.getFragment();
+			fmuName = fmuName.substring(fmuName.lastIndexOf('/')+1);
+			IRemoteFmu fmu = stub.uploadFmu(IOUtils.toByteArray(URI.create(uri.getFragment())), fmuName);
 			return new FmuRemoteProxy(fmu);
 		}
 		return null;

@@ -7,16 +7,16 @@ import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.Fmi2StatusKind;
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
-import org.intocps.fmi.FmuResult;
 import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.InvalidParameterException;
 import org.intocps.orchestration.coe.distribution.IRemoteFmu;
 import org.intocps.orchestration.coe.distribution.IRemoteFmuComponent;
+import org.intocps.orchestration.coe.distribution.RemoteFmuResult;
 
 public class RemoteFmiComponent extends UnicastRemoteObject implements
 		IRemoteFmuComponent
 {
-
+	
 	/**
 	 * 
 	 */
@@ -72,17 +72,17 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public FmuResult<double[]> getRealOutputDerivatives(
+	public RemoteFmuResult<double[]> getRealOutputDerivatives(
 			long[] scalarValueIndices, int order) throws FmuInvocationException
 	{
-		return instance.getRealOutputDerivatives(scalarValueIndices, order);
+		return RemoteFmuResult.wrap( instance.getRealOutputDerivatives(scalarValueIndices, order));
 	}
 
 	@Override
-	public FmuResult<double[]> getDirectionalDerivative(long[] vUnknownRef,
+	public RemoteFmuResult<double[]> getDirectionalDerivative(long[] vUnknownRef,
 			long[] vKnownRef, double[] dvKnown) throws FmuInvocationException
 	{
-		return instance.getDirectionalDerivative(vUnknownRef, vKnownRef, dvKnown);
+		return RemoteFmuResult.wrap(instance.getDirectionalDerivative(vUnknownRef, vKnownRef, dvKnown));
 	}
 
 	@Override
@@ -95,31 +95,31 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public FmuResult<double[]> getReal(long[] scalarValueIndices)
+	public RemoteFmuResult<double[]> getReal(long[] scalarValueIndices)
 			throws FmuInvocationException
 	{
-		return instance.getReal(scalarValueIndices);
+		return RemoteFmuResult.wrap(instance.getReal(scalarValueIndices));
 	}
 
 	@Override
-	public FmuResult<int[]> getInteger(long[] scalarValueIndices)
+	public RemoteFmuResult<int[]> getInteger(long[] scalarValueIndices)
 			throws FmuInvocationException
 	{
-		return instance.getInteger(scalarValueIndices);
+		return RemoteFmuResult.wrap(instance.getInteger(scalarValueIndices));
 	}
 
 	@Override
-	public FmuResult<boolean[]> getBooleans(long[] scalarValueIndices)
+	public RemoteFmuResult<boolean[]> getBooleans(long[] scalarValueIndices)
 			throws FmuInvocationException
 	{
-		return instance.getBooleans(scalarValueIndices);
+		return RemoteFmuResult.wrap(instance.getBooleans(scalarValueIndices));
 	}
 
 	@Override
-	public FmuResult<String[]> getStrings(long[] scalarValueIndices)
+	public RemoteFmuResult<String[]> getStrings(long[] scalarValueIndices)
 			throws FmuInvocationException
 	{
-		return instance.getStrings(scalarValueIndices);
+		return RemoteFmuResult.wrap(instance.getStrings(scalarValueIndices));
 	}
 
 	@Override
@@ -151,38 +151,38 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public FmuResult<Boolean> getBooleanStatus(Fmi2StatusKind kind)
+	public RemoteFmuResult<Boolean> getBooleanStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException
 	{
-		return instance.getBooleanStatus(kind);
+		return RemoteFmuResult.wrap(instance.getBooleanStatus(kind));
 	}
 
 	@Override
-	public FmuResult<Fmi2Status> getStatus(Fmi2StatusKind kind)
+	public RemoteFmuResult<Fmi2Status> getStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException
 	{
-		return instance.getStatus(kind);
+		return RemoteFmuResult.wrap(instance.getStatus(kind));
 	}
 
 	@Override
-	public FmuResult<Integer> getIntegerStatus(Fmi2StatusKind kind)
+	public RemoteFmuResult<Integer> getIntegerStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException
 	{
-		return instance.getIntegerStatus(kind);
+		return RemoteFmuResult.wrap(instance.getIntegerStatus(kind));
 	}
 
 	@Override
-	public FmuResult<Double> getRealStatus(Fmi2StatusKind kind)
+	public RemoteFmuResult<Double> getRealStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException
 	{
-		return instance.getRealStatus(kind);
+		return RemoteFmuResult.wrap(instance.getRealStatus(kind));
 	}
 
 	@Override
-	public FmuResult<String> getStringStatus(Fmi2StatusKind kind)
+	public RemoteFmuResult<String> getStringStatus(Fmi2StatusKind kind)
 			throws FmuInvocationException
 	{
-		return instance.getStringStatus(kind);
+		return RemoteFmuResult.wrap(instance.getStringStatus(kind));
 	}
 
 	@Override
@@ -198,7 +198,7 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 	}
 
 	// @Override
-	// public FmuResult<IFmiComponentState> getState()
+	// public RemoteFmuResult<IFmiComponentState> getState()
 	// throws FmuInvocationException
 	// {
 	// return instance.getState();
@@ -225,10 +225,10 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public FmuResult<Double> getMaxStepSize()
+	public RemoteFmuResult<Double> getMaxStepSize()
 			throws FmiInvalidNativeStateException
 	{
-		return instance.getMaxStepSize();
+		return RemoteFmuResult.wrap( instance.getMaxStepSize());
 	}
 
 	// @Override

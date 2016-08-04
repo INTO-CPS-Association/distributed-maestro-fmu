@@ -1,7 +1,6 @@
 package org.intocps.orchestration.coe.distribution;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.zip.ZipException;
@@ -48,7 +47,7 @@ public interface IRemoteFmu extends Remote
 	public abstract String getTypesPlatform()
 			throws FmiInvalidNativeStateException, RemoteException;
 
-	public abstract InputStream getModelDescription() throws ZipException,
+	public abstract byte[] getModelDescription() throws ZipException,
 			IOException, RemoteException;
 
 	public abstract boolean isValid() throws RemoteException;

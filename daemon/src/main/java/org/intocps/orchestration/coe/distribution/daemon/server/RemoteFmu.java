@@ -2,13 +2,13 @@ package org.intocps.orchestration.coe.distribution.daemon.server;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.zip.ZipException;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.commons.io.IOUtils;
 import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.FmiInvalidNativeStateException;
 import org.intocps.fmi.FmuInvocationException;
@@ -67,9 +67,9 @@ public class RemoteFmu extends UnicastRemoteObject implements IRemoteFmu
 	}
 
 	@Override
-	public InputStream getModelDescription() throws ZipException, IOException
+	public byte[] getModelDescription() throws ZipException, IOException
 	{
-		return instance.getModelDescription();
+		return IOUtils.toByteArray(instance.getModelDescription());
 	}
 
 	@Override
