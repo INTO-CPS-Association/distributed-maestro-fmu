@@ -1,0 +1,18 @@
+{
+	"fmus":{
+		"{x1}":"file:///Users/kel/data/into-cps/distributed-fmu/dcoe/src/test/resources/watertankcontroller-c.fmu",
+		"{x2}":"rmi://192.168.1.241/FMU#file:///Users/kel/data/into-cps/distributed-fmu/dcoe/src/test/resources/watertank-c.fmu"
+	},
+	"connections":{
+		"{x1}.controller.valve":["{x2}.tank.valve"],
+		"{x2}.tank.level":["{x1}.controller.level"]
+	},
+	"parameters":{
+		"{x1}.controller.maxLevel":8,
+		"{x1}.controller.minLevel":2
+	},
+	"algorithm":{
+		"type":"fixed-step",
+		"size":0.1
+	}
+}
