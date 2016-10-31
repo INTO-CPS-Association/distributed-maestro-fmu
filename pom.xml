@@ -27,22 +27,22 @@
 	</modules>
 
 	<prerequisites>
-    <maven>3.0</maven>
+		<maven>3.0</maven>
 	</prerequisites>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-                <fmu.api.version>0.0.10</fmu.api.version>
-<coe.version>0.1.0</coe.version>
+		<fmu.api.version>0.1.2</fmu.api.version>
+		<coe.version>0.1.6</coe.version>
 	</properties>
 
 	<repositories>
 		<repository>
-      <id>overture.au.dk</id>
-      <name>overture.au.dk-releases</name>
-      <url>http://overture.au.dk/artifactory/into-cps</url>
-    </repository>
+			<id>overture.au.dk</id>
+			<name>overture.au.dk-releases</name>
+			<url>http://overture.au.dk/artifactory/into-cps</url>
+		</repository>
 
 
 	</repositories>
@@ -78,11 +78,11 @@
 				<version>${fmu.api.version}</version>
 			</dependency>
 
-		<dependency>
-			<groupId>org.intocps.orchestration</groupId>
-			<artifactId>coe</artifactId>
-			<version>${coe.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>org.intocps.orchestration</groupId>
+				<artifactId>coe</artifactId>
+				<version>${coe.version}</version>
+			</dependency>
 
 
 			<dependency>
@@ -108,7 +108,7 @@
 		<plugins>
 			<plugin>
 				<!--
-            This plugin allows you to run
+						This plugin allows you to run
 
 $ mvn versions:set -Dtycho.mode=maven -PWith-IDE -DnewVersion=2.0.4
 
@@ -121,7 +121,7 @@ need to be set.
 
 More details on the versions-maven-plugin are at
 http://mojo.codehaus.org/versions-maven-plugin/
-        -->
+				-->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<configuration>
@@ -168,20 +168,20 @@ http://mojo.codehaus.org/versions-maven-plugin/
 
 
 			<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        
-        <configuration>
-          <attach>false</attach>
-          <skipSource>true</skipSource>
-        </configuration>
-      </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				
+				<configuration>
+					<attach>false</attach>
+					<skipSource>true</skipSource>
+				</configuration>
+			</plugin>
 			
 		</plugins>
 
 		<!-- Configuration of plugins for inheriting pom.xml files should
-         be in the pluginManagement tag
-    -->
+				 be in the pluginManagement tag
+		-->
 		<pluginManagement>
 			<plugins>
 
@@ -211,7 +211,7 @@ http://mojo.codehaus.org/versions-maven-plugin/
 				</plugin>
 
 				<!-- Enable JavaDoc but dont fail on error. This must be disabled for
-             the Eclipse project in the IDE -->
+						 the Eclipse project in the IDE -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
@@ -393,9 +393,9 @@ http://mojo.codehaus.org/versions-maven-plugin/
 	</build>
 
 	<scm>
-    <url>git@gitlab.au.dk:into-cps/distributed-fmu.git</url>
-    <connection>scm:git:git@gitlab.au.dk:into-cps/distributed-fmu.git</connection>
-    <developerConnection>scm:git:git@gitlab.au.dk:into-cps/distributed-fmu.git</developerConnection>
+		<url>git@gitlab.au.dk:into-cps/distributed-fmu.git</url>
+		<connection>scm:git:git@gitlab.au.dk:into-cps/distributed-fmu.git</connection>
+		<developerConnection>scm:git:git@gitlab.au.dk:into-cps/distributed-fmu.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -437,18 +437,18 @@ http://mojo.codehaus.org/versions-maven-plugin/
 
 
 
-  <distributionManagement>
-    <repository>
-      <id>overture.au.dk</id>
-      <name>overture.au.dk-releases</name>
-      <url>http://overture.au.dk/artifactory/into-cps-distribution</url>
-    </repository>
-    <snapshotRepository>
-      <id>overture.au.dk</id>
-      <name>overture.au.dk-snapshots</name>
-      <url>http://overture.au.dk/artifactory/into-cps-distribution</url>
-    </snapshotRepository>
-  </distributionManagement>
+	<distributionManagement>
+		<repository>
+			<id>overture.au.dk</id>
+			<name>overture.au.dk-releases</name>
+			<url>http://overture.au.dk/artifactory/into-cps-distribution</url>
+		</repository>
+		<snapshotRepository>
+			<id>overture.au.dk</id>
+			<name>overture.au.dk-snapshots</name>
+			<url>http://overture.au.dk/artifactory/into-cps-distribution</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 
 

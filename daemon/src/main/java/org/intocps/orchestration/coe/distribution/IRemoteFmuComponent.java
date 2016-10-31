@@ -30,12 +30,12 @@ public interface IRemoteFmuComponent extends Remote
 	public abstract Fmi2Status reset() throws FmuInvocationException,
 			RemoteException;
 
-	Fmi2Status setRealInputDerivatives(long[] scalarValueIndices, int order,
+	Fmi2Status setRealInputDerivatives(long[] scalarValueIndices, int[] order,
 			double[] derivatives) throws FmuInvocationException,
 			RemoteException;
 
 	RemoteFmuResult<double[]> getRealOutputDerivatives(long[] scalarValueIndices,
-			int order) throws FmuInvocationException, RemoteException;
+			int[] order) throws FmuInvocationException, RemoteException;
 
 	public RemoteFmuResult<double[]> getDirectionalDerivative(long[] vUnknownRef,
 			long[] vKnownRef, double[] dvKnown) throws FmuInvocationException,

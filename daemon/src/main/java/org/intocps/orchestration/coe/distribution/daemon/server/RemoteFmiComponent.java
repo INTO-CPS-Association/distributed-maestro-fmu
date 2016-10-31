@@ -66,14 +66,14 @@ public class RemoteFmiComponent extends UnicastRemoteObject implements
 
 	@Override
 	public Fmi2Status setRealInputDerivatives(long[] scalarValueIndices,
-			int order, double[] derivatives) throws FmuInvocationException
+			int[] order, double[] derivatives) throws FmuInvocationException
 	{
 		return instance.setRealInputDerivatives(scalarValueIndices, order, derivatives);
 	}
 
 	@Override
 	public RemoteFmuResult<double[]> getRealOutputDerivatives(
-			long[] scalarValueIndices, int order) throws FmuInvocationException
+			long[] scalarValueIndices, int[] order) throws FmuInvocationException
 	{
 		return RemoteFmuResult.wrap( instance.getRealOutputDerivatives(scalarValueIndices, order));
 	}
