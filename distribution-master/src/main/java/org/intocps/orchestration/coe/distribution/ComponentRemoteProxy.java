@@ -198,7 +198,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 
 	@Override
 	public FmuResult<double[]> getRealOutputDerivatives(
-			long[] scalarValueIndices, int order) throws FmuInvocationException
+			long[] scalarValueIndices, int[] order) throws FmuInvocationException
 	{
 		try
 		{
@@ -347,10 +347,11 @@ public class ComponentRemoteProxy implements IFmiComponent
 		}
 		return null;
 	}
+	
 
 	@Override
 	public Fmi2Status setRealInputDerivatives(long[] scalarValueIndices,
-			int order, double[] derivatives) throws FmuInvocationException
+			int[] order, double[] derivatives) throws FmuInvocationException
 	{
 		try
 		{
