@@ -21,6 +21,7 @@
 		<dependency>
 			<groupId>org.intocps.orchestration</groupId>
 			<artifactId>coe</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

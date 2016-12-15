@@ -24,6 +24,7 @@
 		<module>daemon</module>
 		<module>distribution-master</module>
 		<module>dcoe</module>
+		<module>bundle</module>
 	</modules>
 
 	<prerequisites>
