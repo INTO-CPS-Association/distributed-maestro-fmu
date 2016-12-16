@@ -24,8 +24,16 @@
 		<dependency>
 			<groupId>org.intocps.orchestration.distribution</groupId>
 			<artifactId>distribution-master</artifactId>
-				<version>${project.version}</version>
+			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.intocps.orchestration.distribution</groupId>
+			<artifactId>dcoe</artifactId>
+			<version>${project.version}</version>
+			<classifier>jar-with-dependencies</classifier>
+		</dependency>
+
+		
 	</dependencies>
 
 	<build>
