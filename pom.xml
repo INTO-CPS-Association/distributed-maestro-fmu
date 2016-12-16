@@ -13,7 +13,7 @@
 	<groupId>org.intocps.orchestration.distribution</groupId>
 	<artifactId>root</artifactId>
 
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<name>Distribution of FMUs with the INTO-CPS COE</name>
 	<description>
@@ -397,7 +397,7 @@ http://mojo.codehaus.org/versions-maven-plugin/
 		<url>git@gitlab.au.dk:into-cps/distributed-fmu.git</url>
 		<connection>scm:git:git@gitlab.au.dk:into-cps/distributed-fmu.git</connection>
 		<developerConnection>scm:git:git@gitlab.au.dk:into-cps/distributed-fmu.git</developerConnection>
-		<tag>Release/0.0.2</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<developers>
