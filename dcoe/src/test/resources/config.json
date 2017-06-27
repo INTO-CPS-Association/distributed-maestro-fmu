@@ -1,7 +1,7 @@
 {
 	"fmus":{
-		"{x1}":"file:///Users/kel/data/into-cps/distributed-fmu/dcoe/src/test/resources/watertankcontroller-c.fmu",
-		"{x2}":"rmi://192.168.1.241/FMU#file:///Users/kel/data/into-cps/distributed-fmu/dcoe/src/test/resources/watertank-c.fmu"
+		"{x1}":"watertankcontroller-c.fmu",
+		"{x2}":"watertank-c.fmu"
 	},
 	"connections":{
 		"{x1}.controller.valve":["{x2}.tank.valve"],

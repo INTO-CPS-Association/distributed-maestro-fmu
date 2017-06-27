@@ -1,17 +1,11 @@
 package org.intocps.orchestration.coe.distribution;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.rmi.RemoteException;
 import java.util.Map.Entry;
-
-import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.io.IOUtils;
 import org.intocps.fmi.Fmi2Status;
-import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmiComponent;
 import org.intocps.orchestration.coe.distribution.daemon.DaemonMain;
 import org.junit.AfterClass;
@@ -61,7 +55,7 @@ public class UploadTest
 	}
 
 	@Test
-	public void configTest() throws InterruptedException, RemoteException
+	public void configTest() throws Exception
 	{
 		URI fmu = URI.create("file://src/test/resources/watertank-c.fmu");
 		fmu = new File(".").toURI().resolve(fmu);
@@ -77,8 +71,7 @@ public class UploadTest
 	}
 
 	@Test
-	public void uploadTest() throws InterruptedException, IOException,
-			FmuInvocationException, URISyntaxException
+	public void uploadTest() throws Exception
 	{
 		URI fmu = new URI("src/test/resources/watertank-c.fmu");
 		fmu = new File(".").toURI().resolve(fmu);
@@ -101,9 +94,7 @@ public class UploadTest
 	}
 
 	@Test
-	public void instantiateTest() throws InterruptedException, IOException,
-			FmuInvocationException, URISyntaxException,
-			XPathExpressionException
+	public void instantiateTest() throws Exception
 	{
 		URI fmu = new URI("src/test/resources/watertank-c.fmu");
 		fmu = new File(".").toURI().resolve(fmu);

@@ -10,10 +10,13 @@ import java.util.HashMap;
 import org.apache.commons.io.IOUtils;
 import org.intocps.fmi.FmuInvocationException;
 import org.intocps.fmi.IFmu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DistributionMaster
 {
 
+	final static Logger logger = LoggerFactory.getLogger(DistributionMaster.class);
 	private static DistributionMaster instance;
 
 	private DistributionMaster()
@@ -31,28 +34,32 @@ public class DistributionMaster
 		return instance;
 	}
 
-	public IDaemon connectToRemote(URI remote_path)
+	public IDaemon connectToRemote(URI remote_path) throws Exception
 	{
+		String path = "";
 		try
 		{
-			String path = remote_path.toString();
+			path = remote_path.toString();
 			path = path.substring(0, path.indexOf('#'));
 			if (mapOfStubs.containsKey(path))
 			{
 				return mapOfStubs.get(path);
 			}
 
-			System.out.println("Trying to lookup on: " + path);
+			logger.debug("Trying to lookup on: " + path);
 
 			IDaemon stub = (IDaemon) Naming.lookup(path);
 			mapOfStubs.put(path, stub);
 			return stub;
+		} catch (java.rmi.ConnectException e)
+		{
+			logger.error("Could not find daemon on endpoint: '" + path + "'. {}", e.getMessage());
+			throw e;
 		} catch (Exception e)
 		{
-			System.err.println("Client exception: " + e.toString());
-			e.printStackTrace();
+			logger.error("Could not find daemon on endpoint: '" + path + "'", e);
+			throw e;
 		}
-		return null;
 	}
 
 	public IFmu uploadFmu(String remote_path, File file)
@@ -61,8 +68,8 @@ public class DistributionMaster
 		IRemoteFmu distFmu = null;
 		try
 		{
-			distFmu = stub.uploadFmu(IOUtils.toByteArray(new FileInputStream(file)), file.getName());// .getDistributedFmu(file,
-																										// remote_path);
+			distFmu = stub.uploadFmu(IOUtils.toByteArray(new FileInputStream(file)), file.getName());
+
 		} catch (IOException | FmuInvocationException e)
 		{
 			e.printStackTrace();

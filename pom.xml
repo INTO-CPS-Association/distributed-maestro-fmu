@@ -34,8 +34,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<fmu.api.version>0.1.6</fmu.api.version>
-		<coe.version>0.1.10</coe.version>
+		<fmu.api.version>0.2.2</fmu.api.version>
+		<coe.version>0.2.8</coe.version>
 	</properties>
 
 	<repositories>
