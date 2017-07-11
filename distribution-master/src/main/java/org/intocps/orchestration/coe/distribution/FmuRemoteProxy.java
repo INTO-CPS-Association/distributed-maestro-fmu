@@ -121,7 +121,7 @@ public class FmuRemoteProxy implements IFmu
 
 			IRemoteFmuComponent remoteComp = remote.instantiate(guid, name, visible, loggingOn, remoteCallback);
 
-			return new ComponentRemoteProxy(this, remoteComp);
+			return new ComponentRemoteProxy(this, remoteComp, remoteCallback);
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);

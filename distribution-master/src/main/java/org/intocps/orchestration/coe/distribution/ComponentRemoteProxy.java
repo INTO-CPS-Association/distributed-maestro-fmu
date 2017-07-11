@@ -1,6 +1,7 @@
 package org.intocps.orchestration.coe.distribution;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 import org.intocps.fmi.Fmi2Status;
 import org.intocps.fmi.Fmi2StatusKind;
@@ -11,6 +12,7 @@ import org.intocps.fmi.IFmiComponent;
 import org.intocps.fmi.IFmiComponentState;
 import org.intocps.fmi.IFmu;
 import org.intocps.fmi.InvalidParameterException;
+import org.intocps.orchestration.coe.distribution.IRemoteFmu.IRemoteFmuCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +21,14 @@ public class ComponentRemoteProxy implements IFmiComponent
 	final static Logger logger = LoggerFactory.getLogger(ComponentRemoteProxy.class);
 	final IFmu fmu;
 	final IRemoteFmuComponent comp;
+	final IRemoteFmuCallback remoteCallback;
 
-	public ComponentRemoteProxy(IFmu fmu, IRemoteFmuComponent comp)
+	public ComponentRemoteProxy(IFmu fmu, IRemoteFmuComponent comp,
+			IRemoteFmuCallback remoteCallback)
 	{
 		this.fmu = fmu;
 		this.comp = comp;
+		this.remoteCallback = remoteCallback;
 	}
 
 	@Override
@@ -72,6 +77,7 @@ public class ComponentRemoteProxy implements IFmiComponent
 		try
 		{
 			comp.freeInstance();
+			UnicastRemoteObject.unexportObject(remoteCallback, true);
 		} catch (RemoteException e)
 		{
 			logger.error("RemoteException", e);
@@ -198,7 +204,8 @@ public class ComponentRemoteProxy implements IFmiComponent
 
 	@Override
 	public FmuResult<double[]> getRealOutputDerivatives(
-			long[] scalarValueIndices, int[] order) throws FmuInvocationException
+			long[] scalarValueIndices, int[] order)
+			throws FmuInvocationException
 	{
 		try
 		{
@@ -347,7 +354,6 @@ public class ComponentRemoteProxy implements IFmiComponent
 		}
 		return null;
 	}
-	
 
 	@Override
 	public Fmi2Status setRealInputDerivatives(long[] scalarValueIndices,

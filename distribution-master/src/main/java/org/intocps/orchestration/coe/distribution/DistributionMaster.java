@@ -53,7 +53,8 @@ public class DistributionMaster
 			return stub;
 		} catch (java.rmi.ConnectException e)
 		{
-			logger.error("Could not find daemon on endpoint: '" + path + "'. {}", e.getMessage());
+			logger.error("Could not find daemon on endpoint: '" + path
+					+ "'. {}", e.getMessage());
 			throw e;
 		} catch (Exception e)
 		{
