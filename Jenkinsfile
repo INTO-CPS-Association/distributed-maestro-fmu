@@ -4,7 +4,7 @@ node {
     // Mark the code checkout 'stage'....
     stage 'Checkout'
     checkout scm
-		#	sh 'git submodule update --init --recursive' 
+		//	sh 'git submodule update --init --recursive' 
 
 
     stage ('Clean'){
