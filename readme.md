@@ -5,6 +5,9 @@
 
 http://www.javaworld.com/article/2076234/soa/get-smart-with-proxies-and-rmi.html
 
+## RMI descriptrion
+
+http://www.cs.man.ac.uk/~fellowsd/work/usingRMI.html
 
 # Release
 
