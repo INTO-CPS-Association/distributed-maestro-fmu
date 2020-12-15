@@ -7,13 +7,13 @@ It works by starting a daemon on the remote system which then through Java RMI s
 The mabl syntax for the remote loader (named `JavaRmiRemoteFMU2Loader`) is as follows.
 
 ```
-load("JavaRmiRemoteFMU2Loader",  "<local fmu path>" , "<remote uri>", "<remote path>");
+load("JavaRmiRemoteFMU2Loader",  "<local fmu path>", "<guid>" , "<remote uri>", "<remote path>");
 ```
 
 example:
 
 ```
-FMI2 fmu = load("JavaRmiRemoteFMU2Loader",  "/path/to/my.fmu" , "rmi://localhost:999/FMU", "/remote/system/path");
+FMI2 fmu = load("JavaRmiRemoteFMU2Loader",  "/path/to/my.fmu", "{cfc65592-9ece-4563-9705-1581b6e7071c}" , "rmi://localhost:999/FMU", "/remote/system/path");
 
 ```
 
