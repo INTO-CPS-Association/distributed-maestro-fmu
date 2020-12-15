@@ -1,5 +1,11 @@
 package org.intocps.orchestration.coe.distribution.daemon.server;
 
+import org.apache.commons.io.FileUtils;
+import org.intocps.fmi.FmuInvocationException;
+import org.intocps.fmi.FmuMissingLibraryException;
+import org.intocps.orchestration.coe.distribution.IDaemon;
+import org.intocps.orchestration.coe.distribution.IRemoteFmu;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,95 +19,73 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
-import org.intocps.fmi.FmuInvocationException;
-import org.intocps.orchestration.coe.distribution.IDaemon;
-import org.intocps.orchestration.coe.distribution.IRemoteFmu;
+public class Daemon extends UnicastRemoteObject implements IDaemon {
 
-public class Daemon extends UnicastRemoteObject implements IDaemon
-{
+    static final Map<String, String> config = new HashMap<>();
+    /**
+     *
+     */
+    private static final long serialVersionUID = 72476226803281111L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 72476226803281111L;
+    static {
+        config.put("os.arch", System.getProperty("os.arch"));
+        config.put("os.name", System.getProperty("os.name"));
+        config.put("os.version", System.getProperty("os.version"));
+    }
 
-	static final Map<String, String> config = new HashMap<>();
+    public Daemon() throws RemoteException {
 
-	static
-	{
-		config.put("os.arch", System.getProperty("os.arch"));
-		config.put("os.name", System.getProperty("os.name"));
-		config.put("os.version", System.getProperty("os.version"));
-	}
+    }
 
-	public Daemon() throws RemoteException
-	{
+    public void initialize(File file) {
+        if (file != null && file.exists()) {
+            loadProperties(file);
+        }
+    }
 
-	}
+    private void loadProperties(File file) {
+        Properties prop = new Properties();
+        InputStream input = null;
 
-	public void initialize(File file)
-	{
-		if (file != null && file.exists())
-		{
-			loadProperties(file);
-		}
-	}
+        try {
 
-	private void loadProperties(File file)
-	{
-		Properties prop = new Properties();
-		InputStream input = null;
+            input = new FileInputStream("config.properties");
 
-		try
-		{
+            // load a properties file
+            prop.load(input);
 
-			input = new FileInputStream("config.properties");
+            for (Entry<Object, Object> p : prop.entrySet()) {
+                config.put("" + p.getKey(), "" + p.getValue());
+            }
 
-			// load a properties file
-			prop.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-			for (Entry<Object, Object> p : prop.entrySet())
-			{
-				config.put("" + p.getKey(), "" + p.getValue());
-			}
+        }
+    }
 
-		} catch (IOException ex)
-		{
-			ex.printStackTrace();
-		} finally
-		{
-			if (input != null)
-			{
-				try
-				{
-					input.close();
-				} catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
+    @Override
+    public IRemoteFmu uploadFmu(byte[] buffer, String name) throws IOException, FmuInvocationException, FmuMissingLibraryException {
+        File downloadFolder = Files.createTempDirectory("deamon-fmus", new FileAttribute[]{}).toFile();
+        File file = new File(downloadFolder, name);
 
-		}
-	}
+        FileUtils.writeByteArrayToFile(file, buffer);
 
-	@Override
-	public IRemoteFmu uploadFmu(byte[] buffer, String name)
-			throws RemoteException, IOException, FmuInvocationException
-	{
-		File downloadFolder = Files.createTempDirectory("deamon-fmus", new FileAttribute[] {}).toFile();
-		File file = new File(downloadFolder, name);
+        IRemoteFmu distFmu = new RemoteFmu(file);
+        return distFmu;
+    }
 
-		FileUtils.writeByteArrayToFile(file, buffer);
+    @Override
+    public Map<String, String> getDaemonConfiguration() throws RemoteException {
 
-		IRemoteFmu distFmu = new RemoteFmu(file);
-		return distFmu;
-	}
-
-	@Override
-	public Map<String, String> getDaemonConfiguration() throws RemoteException
-	{
-
-		return config;
-	}
+        return config;
+    }
 }

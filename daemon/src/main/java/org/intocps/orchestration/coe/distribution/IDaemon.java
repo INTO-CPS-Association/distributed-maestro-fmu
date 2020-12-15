@@ -1,16 +1,15 @@
 package org.intocps.orchestration.coe.distribution;
 
+import org.intocps.fmi.FmuInvocationException;
+import org.intocps.fmi.FmuMissingLibraryException;
+
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 
-import org.intocps.fmi.FmuInvocationException;
+public interface IDaemon extends Remote {
+    IRemoteFmu uploadFmu(byte buffer[], String name) throws IOException, FmuInvocationException, FmuMissingLibraryException;
 
-public interface IDaemon extends Remote
-{
-	IRemoteFmu uploadFmu(byte buffer[], String name) throws RemoteException,
-			IOException, FmuInvocationException;
-
-	Map<String, String> getDaemonConfiguration() throws RemoteException;
+    Map<String, String> getDaemonConfiguration() throws RemoteException;
 }
