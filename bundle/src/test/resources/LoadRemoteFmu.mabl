@@ -1,0 +1,49 @@
+simulation
+import FMI2;
+//import DataWriter;
+import JavaRmiRemoteFMU2Loader;
+import Logger;
+{
+ 	real START_TIME = 0.0;
+	real END_TIME = 10.0;
+	real STEP_SIZE = 0.1;
+//	DataWriter dataWriter = load("DataWriter");
+	Logger logger = load("Logger");
+
+	FMI2 SingleWatertank = load("JavaRmiRemoteFMU2Loader", "singlewatertank-20sim.fmu", "{cfc65592-9ece-4563-9705-1581b6e7071c}", "rmi://localhost:1099/FMU","");
+
+	FMI2Component wtInstance = SingleWatertank.instantiate("wtInstance", false, false);
+
+	bool global_execution_continue = true;
+    while( (global_execution_continue) )
+    {
+
+    	int status = wtInstance.setupExperiment(false, 0.0, START_TIME, true, END_TIME);
+        if( (status == 3 || status == 4) )
+        {
+                logger.log(4, "Setup Experiment Failed:  %d", status);
+                global_execution_continue = false;
+                break;
+        }
+
+        real realValueSize7[7] = { 9.0 , 1.0 , 1.0 , 9.81 , 1.0 , 0.0 , 0.0 };
+		uint valRefsSize7[7] = { 0 , 1 , 2 , 3 , 4 , 5 , 6 };
+        status = wtInstance.setReal(valRefsSize7, 2, realValueSize7);
+        if( (status == 3 || status == 4) )
+        {
+                logger.log(4, "set failed %d", status);
+                global_execution_continue = false;
+                break;
+        }
+
+        real result[2] = { 0.0 , 0.0 };
+        uint refs[2] = { 0 , 1};
+        status = wtInstance.getReal(refs, 2, result);
+        if( (status == 0) )
+        {
+            logger.log(3, "OK %f ; %f",result[0],result[0] );
+        }
+        break;
+
+    }
+}
