@@ -29,5 +29,5 @@ jobs:
       - name: Maven Test
         run: mvn test
       - name: Shell test
-        run: bash -c 'cd bundle/src/test/resources && .script.sh && cat verdict.txt'
+        run: bash -c 'cd bundle/src/test/resources && ./script.sh && cat verdict.txt'
 
