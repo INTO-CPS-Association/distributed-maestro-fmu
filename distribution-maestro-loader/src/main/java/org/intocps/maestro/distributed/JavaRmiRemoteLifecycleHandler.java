@@ -104,7 +104,7 @@ public class JavaRmiRemoteLifecycleHandler implements IValueLifecycleHandler {
         */
         List<Value> args = list.stream().map(Value::deref).collect(Collectors.toList());
 
-        checkArgLength(args, 4);
+        checkArgLength(args, 3);
 
         String[] argNames = new String[]{"path", "url", "remotePath"};
         for (int i = 0; i < args.size(); i++) {
@@ -116,7 +116,6 @@ public class JavaRmiRemoteLifecycleHandler implements IValueLifecycleHandler {
         String path = ((StringValue) args.get(0)).getValue();
         String guid = ((StringValue) args.get(1)).getValue();
         String uri = ((StringValue) args.get(2)).getValue();
-        String remotePath = ((StringValue) args.get(3)).getValue();
 
         try {
             if (!isSupportedByRemote(path, uri)) {
@@ -127,14 +126,14 @@ public class JavaRmiRemoteLifecycleHandler implements IValueLifecycleHandler {
         }
 
         try {
-            IFmu remoteFmuProxy = removeCreate(path, URI.create(uri), remotePath);
+            IFmu remoteFmuProxy = removeCreate(path, URI.create(uri));
             return Either.right(new FmuValue(Fmi2Interpreter.createFmuMembers(workingDirectory, guid, remoteFmuProxy), remoteFmuProxy));
         } catch (Exception e) {
             return Either.left(e);
         }
     }
 
-    private IFmu removeCreate(String path, URI uri, String remotePath) throws Exception {
+    private IFmu removeCreate(String path, URI uri) throws Exception {
 
         IDaemon stub = connect(uri, path);
         if (stub != null) {

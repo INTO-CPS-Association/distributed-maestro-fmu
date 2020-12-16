@@ -10,7 +10,7 @@ import Logger;
 //	DataWriter dataWriter = load("DataWriter");
 	Logger logger = load("Logger");
 
-	FMI2 SingleWatertank = load("JavaRmiRemoteFMU2Loader", "singlewatertank-20sim.fmu", "{cfc65592-9ece-4563-9705-1581b6e7071c}", "rmi://localhost:1099/FMU","");
+	FMI2 SingleWatertank = load("JavaRmiRemoteFMU2Loader", "singlewatertank-20sim.fmu", "{cfc65592-9ece-4563-9705-1581b6e7071c}", "rmi://localhost:1099/FMU");
 
 	FMI2Component wtInstance = SingleWatertank.instantiate("wtInstance", false, false);
 
