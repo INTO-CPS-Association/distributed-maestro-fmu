@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 maestro=../../../../dmaestro/target/dmaestro-0.0.7-SNAPSHOT-jar-with-dependencies.jar
 daemon=../../../../daemon/target/daemon-0.0.7-SNAPSHOT-jar-with-dependencies.jar
 
@@ -25,7 +25,10 @@ echo "Running remote sim"
 
 #trap kill -9 $(cat daemon.pid) EXIT
 
-trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+
+#trap "trap - SIGTERM && kill -- -$$ " SIGINT SIGTERM EXIT
+
+trap "trap - EXIT && kill -- -$$ " SIGINT SIGTERM EXIT
 
 java -jar $daemon -ip4 -host localhost &
 
